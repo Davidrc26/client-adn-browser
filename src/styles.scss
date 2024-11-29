@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+// Variable overrides first
+$primary: #3B1E54;
+$enable-shadows: true;
+$prefix: "mo-";
+
+// Then import Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+:root {
+    --primary-color: #3B1E54;
+    --secondary-color: #EEEEEE;
+    --font-size-base: 16px;
+    --border-radius: 4px;
+  }
+
+html{
+  height: 100%;
+}
+body{
+    background-color: var(--secondary-color);
+    height: 100%;
+}
