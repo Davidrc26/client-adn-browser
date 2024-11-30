@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export default class LoginComponent implements OnInit {
+export default class LoginComponent implements OnInit { 
   
   public loginForm!: FormGroup;
   

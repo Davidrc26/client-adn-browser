@@ -1,7 +1,8 @@
 
-<div class="w-100"  style="height: 100%;">
-
-  <app-header/>
+<div style="height: 100%;" [ngClass]="[isLoginOrRegister?'center-content': '']">
+  @if(!isLoginOrRegister){
+    <app-header/>
+  }
   <router-outlet />
   
 </div>

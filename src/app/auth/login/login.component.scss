@@ -1,0 +1,15 @@
+.form-container {
+    max-width: 400px;
+}
+  
+.logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.btn:hover{
+    background-color: var(--secondary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
