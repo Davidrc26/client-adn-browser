@@ -1,0 +1,59 @@
+<div class="container mt-5">
+    <div class="search-bar mb-4 d-flex flex-column w-100 justify-content-center align-items-center">
+        <input type="text" class="form-control rounded-lg w-50 mb-2" [(ngModel)]="searchTerm" (keyup.enter)="search()"
+            placeholder="Enter a keyword to search...">
+        <button class="btn btn-primary btn-circle py-1 mx-auto" (click)="search()">Go</button>
+    </div>
+    <div class="results-table w-100 custom-shadow  ">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Chrom</th>
+                    <th>Pos</th>
+                    <th>Id</th>
+                    <th>Ref</th>
+                    <th>Alt</th>
+                    <th>Qual</th>
+                    <th>Filter</th>
+                    <th>Info</th>
+                    <th>Format</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(!searchPerformed){
+                    <tr>
+                        <td colspan="10" class="text-center text-secondary">No search performed yet</td>
+                    </tr>
+                }
+                @if(searchPerformed && results.length === 0){
+                    <tr>
+                        <td colspan="10" class="text-center text-secondary">No results found</td>
+                    </tr>
+                }
+                
+
+                <tr *ngFor="let item of results | paginate: { itemsPerPage: pageSize, currentPage: page}">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>   
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="w-100 mt-2 d-flex justify-content-center">
+            <pagination-controls class="mx-auto" (pageChange)="pageChanged($event)"
+                (pageBoundsCorrection)="pageChanged($event)" [maxSize]="9" [directionLinks]="true" [autoHide]="true"
+                [responsive]="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+        </div>
+    </div>
+</div>

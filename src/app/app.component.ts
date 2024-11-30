@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { CommonModule } from '@angular/common';
@@ -9,14 +9,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'client-adn-browser';
   isLoginOrRegister: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router, 
   ) {}
+  
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -24,4 +27,5 @@ export class AppComponent implements OnInit {
       this.isLoginOrRegister = url.includes('login') || url.includes('register');
     });
   }
+
 }

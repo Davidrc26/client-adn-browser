@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 // Variable overrides first
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 $primary: #3B1E54;
 $enable-shadows: true;
 $prefix: "mo-";
@@ -14,6 +15,7 @@ $box-shadow-color: rgba(59, 30, 84, 0.5);
     --tertiary-color: #EEEEEE;
     --font-size-base: 16px;
     --border-radius: 4px;
+    --font-family-base: 'Roboto', sans-serif; 
   }
 
 html{
@@ -22,8 +24,15 @@ html{
 body{
     background-color: var(--tertiary-color);
     height: 100%;
+    font-family: var(--font-family-base);
 }
 
 .custom-shadow {
   box-shadow: 0 .5rem 1rem $box-shadow-color !important;
+}
+
+.btn:hover{
+  background-color: var(--secondary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
 }
