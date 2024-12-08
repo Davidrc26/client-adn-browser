@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { StorageService } from '../../services/storage.service';
+import { EmailService } from '../../services/email.service';
+import { User } from '../../models/all_models';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +12,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export default class RegisterComponent implements OnInit{
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private storageService: StorageService,
+    private emailService: EmailService
   )
   {}
 
@@ -27,4 +32,21 @@ export default class RegisterComponent implements OnInit{
     })
   }
 
+  register(): void {
+    if (this.registerForm.valid) {
+      this.emailService.sendEmail(this.registerForm.value.email).subscribe({
+        next: (resp:any) => {
+          console.log('Email sent');
+          let user : User = {
+            ...this.registerForm.value,
+            secret: resp.secret
+          }
+          this.storageService.addUser('users', user);
+        },
+        error: (error) => {
+          console.error('Error sending email', error);
+        }
+      });
+    }
+  }
 }

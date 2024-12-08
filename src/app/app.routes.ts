@@ -18,6 +18,5 @@ export const routes: Routes = [
   {
     path: 'browser',
     loadComponent: () => import('./browser/browser.component'),
-    canActivate: [authGuard]
   }
 ];
