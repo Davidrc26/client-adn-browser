@@ -38,6 +38,7 @@ export default class LoginComponent implements OnInit {
       let user = users.find(user => user.email === this.loginForm.value.email && user.secret === this.loginForm.value.code);
       if (user) {
         this.alertService.showInformationDialog('Login successful');
+        this.storageService.setCurrentUser(user.email);
         this.router.navigate(['/browser']);
       } else {
         this.alertService.showErrorDialog('Invalid email or code');

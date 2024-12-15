@@ -1,5 +1,8 @@
 <header class="w-100 d-flex py-1">
-    <nav class="left"></nav>
+    <nav class="left w-25"></nav>
     <img class="mx-auto" src="assets/images/logo_header.png" alt="Esta seria la imagen">
-    <nav class="right"></nav>
+    <nav class="right d-flex justify-content-end aling-items-center w-25 py-4">
+        <a class=""><i class="fa-solid fa-user"></i>&nbsp;{{currentUser}}</a>&nbsp;&nbsp;
+        <a class="" (click)="logout()" title="Log out"><i class="fa-solid fa-right-from-bracket"></i></a>&nbsp;&nbsp;
+    </nav>
 </header>

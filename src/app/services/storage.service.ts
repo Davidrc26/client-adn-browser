@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
 
   
@@ -24,5 +27,14 @@ export class StorageService {
     const array = this.getUsers(key);
     array.push(user);
     this.setUsers(key, array);
+  }
+
+  public setCurrentUser(email:any): void {
+    localStorage.setItem('currentUser', email);
+  }
+
+  public logOut(): void {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 }
