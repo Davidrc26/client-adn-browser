@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { StorageService } from '../../services/storage.service';
 import { EmailService } from '../../services/email.service';
 import { User } from '../../models/all_models';
+import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,12 +16,14 @@ export default class RegisterComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private alertService: AlertService,
+    private router: Router
   )
   {}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.buildForm();
   }
   public registerForm!: FormGroup;
 
@@ -33,20 +37,29 @@ export default class RegisterComponent implements OnInit{
   }
 
   register(): void {
-    if (this.registerForm.valid) {
+    if (this.registerForm.valid && !this.existsUser(this.registerForm.value.email)) {
       this.emailService.sendEmail(this.registerForm.value.email).subscribe({
         next: (resp:any) => {
-          console.log('Email sent');
+          this.alertService.showInformationDialog('Otp login code has been sent by email.');
           let user : User = {
             ...this.registerForm.value,
-            secret: resp.secret
+            secret: resp.otp
           }
+          
           this.storageService.addUser('users', user);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
-          console.error('Error sending email', error);
+          this.alertService.showErrorDialog('Error sending email');
         }
       });
     }
+  }
+
+  existsUser(email: string): boolean {
+    let users = this.storageService.getUsers('users');
+    let existsUser = users.some((user: User) => user.email === email);
+    existsUser? this.alertService.showErrorDialog('User already exists') : null;
+    return existsUser;
   }
 }

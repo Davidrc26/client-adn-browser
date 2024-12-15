@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
+const BASE_URL = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +14,9 @@ export class EmailService {
   ) { }
 
   public sendEmail(email: string): Observable<any> {
-    return this.http.post('https://api.sendgrid.com/v3/mail/send', {
-      email,
-    });
+    let body = {
+      email: email
+    }
+    return this.http.post(`${BASE_URL}/email`, body);
   }
 }

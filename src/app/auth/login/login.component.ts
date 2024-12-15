@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../models/all_models';
 import { StorageService } from '../../services/storage.service';
+import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,9 @@ export default class LoginComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private alertService: AlertService,
+    private router: Router
   )
 
   {}
@@ -30,12 +34,16 @@ export default class LoginComponent implements OnInit {
   login(): void {
     if (this.loginForm.valid) {
       let users : User[] = this.storageService.getUsers('users');
+      console.log(users);
       let user = users.find(user => user.email === this.loginForm.value.email && user.secret === this.loginForm.value.code);
       if (user) {
-        console.log('User logged in');
+        this.alertService.showInformationDialog('Login successful');
+        this.router.navigate(['/browser']);
       } else {
-        console.error('Invalid email or code');
+        this.alertService.showErrorDialog('Invalid email or code');
       }
+    }else{
+      this.alertService.showErrorDialog('Invalid form');
     }
   }
 }
